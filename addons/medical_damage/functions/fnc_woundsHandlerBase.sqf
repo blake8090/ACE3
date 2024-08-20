@@ -120,8 +120,11 @@ private _bodyPartVisParams = [_unit, false, false, false, false]; // params arra
             _criticalDamage = true;
         };
         if ([_unit, _bodyPartNToAdd, _bodyPartDamage, _woundDamage] call FUNC(determineIfFatal)) then {
-            if (!isPlayer _unit || {random 1 < EGVAR(medical,deathChance)}) then {
-                TRACE_1("determineIfFatal returned true",_woundDamage);
+            TRACE_1("Fatal damage",_woundDamage);
+            // TODO: Add separate settings for player and AI death chances
+            private _deathChance = EGVAR(medical,deathChance);
+            if (random 1 < _deathChance) then {
+                TRACE_1("Fatal injury",_deathChance);
                 [QEGVAR(medical,FatalInjury), _unit] call CBA_fnc_localEvent;
             };
         };
